@@ -1,5 +1,10 @@
-﻿using BLL.Entities;
-using BLL.Services;
+﻿// Test DAL
+using DAL.Entities;
+using DAL.Services;
+
+// Test BLL
+//using BLL.Entities;
+//using BLL.Services;
 
 namespace ConsoleTest
 {
@@ -7,11 +12,7 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            /*CocktailService service = new CocktailService();
-            foreach (Cocktail c in service.Get())
-            {
-                Console.WriteLine($"{c.Cocktail_Id} : {c.Name}\nCréé le : {c.CreatedAt.ToShortDateString()}\n{c.Description}\n{c.Instructions}");
-            }*/
-        }
+			// Test DAL
+		}
     }
 }
