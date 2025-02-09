@@ -21,7 +21,7 @@ namespace DAL.Services
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
-					command.CommandText = "SP_Comment_GetByUserId";
+					command.CommandText = "SP_Comment_GetByCocktailId";
 					command.CommandType = CommandType.StoredProcedure;
 					command.Parameters.AddWithValue(nameof(cocktail_id), cocktail_id);
 					connection.Open();
@@ -42,7 +42,7 @@ namespace DAL.Services
 			{
 				using (SqlCommand command = connection.CreateCommand())
 				{
-					command.CommandText = "SP_Comment_GetByCocktailId";
+					command.CommandText = "SP_Comment_GetByUserId";
 					command.CommandType = CommandType.StoredProcedure;
 					command.Parameters.AddWithValue(nameof(user_id), user_id);
 					connection.Open();
