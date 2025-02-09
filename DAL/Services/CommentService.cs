@@ -67,9 +67,9 @@ namespace DAL.Services
 					command.CommandType = CommandType.StoredProcedure;
 					command.Parameters.AddWithValue(nameof(Comment.Title), comment.Title);
 					command.Parameters.AddWithValue(nameof(Comment.Content), comment.Content);
-					command.Parameters.AddWithValue(nameof(Comment.Concern), comment.Concern);
+					command.Parameters.AddWithValue("cocktail_id", comment.Concern);
 					command.Parameters.AddWithValue(nameof(Comment.Note), (object?)comment.Note ?? DBNull.Value);
-					command.Parameters.AddWithValue(nameof(Comment.CreatedBy), (object?)comment.CreatedBy ?? DBNull.Value);
+					command.Parameters.AddWithValue("user_id", (object?)comment.CreatedBy ?? DBNull.Value);
 					connection.Open();
 					return (Guid)command.ExecuteScalar();
 				}
@@ -87,7 +87,6 @@ namespace DAL.Services
 					command.Parameters.AddWithValue(nameof(comment_id), comment_id);
 					command.Parameters.AddWithValue(nameof(Comment.Title), comment.Title);
 					command.Parameters.AddWithValue(nameof(Comment.Content), comment.Content);
-					command.Parameters.AddWithValue(nameof(Comment.Concern), comment.Concern);
 					command.Parameters.AddWithValue(nameof(Comment.Note), (object?)comment.Note ?? DBNull.Value);
 					connection.Open();
 					command.ExecuteNonQuery();
