@@ -17,7 +17,7 @@ namespace ConsoleTest
 
 			Console.WriteLine("=== Test CommentService ===");
 
-			// 1. Insérer un commentaire
+			//// 1. Insérer un commentaire
 			Guid userId = new Guid("e5d87746-d701-466c-9dde-1d3f6af9ade2");
 			Guid cocktailId = new Guid("84b8d802-bab9-4c0a-8bc9-0556f8a61476");
 
@@ -27,7 +27,7 @@ namespace ConsoleTest
 				Content = "J'ai adoré ce cocktail, très rafraîchissant!",
 				Concern = cocktailId,
 				CreatedBy = userId,
-				Note = 5
+				Note = 3
 			};
 
 			Guid newCommentId = commentService.Insert(newComment);
@@ -50,9 +50,14 @@ namespace ConsoleTest
 			// 4. Mettre à jour un commentaire
 			newComment.Title = "Cocktail revisité!";
 			newComment.Content = "Après un deuxième essai, je l'aime encore plus!";
-			newComment.Note = 4;
+			newComment.Note = 5;
 			commentService.Update(newCommentId, newComment);
 			Console.WriteLine("\nCommentaire mis à jour.");
+			Console.WriteLine("\n=== Commentaire après modification ===");
+			Console.WriteLine($"ID: {newCommentId}");
+			Console.WriteLine($"Titre: {newComment.Title}");
+			Console.WriteLine($"Contenu: {newComment.Content}");
+			Console.WriteLine($"Note: {newComment.Note}");
 
 			// 5. Supprimer un commentaire
 			commentService.Delete(newCommentId);
