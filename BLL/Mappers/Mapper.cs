@@ -22,7 +22,8 @@ namespace BLL.Mappers
                 user.Password,
                 user.CreatedAt,
                 user.DisabledAt,
-                user.Role);
+                user.Role
+			);
         }
 
         public static D.User ToDAL(this User user)
@@ -53,7 +54,7 @@ namespace BLL.Mappers
                 cocktail.Instructions,
                 DateOnly.FromDateTime(cocktail.CreatedAt),
                 cocktail.CreatedBy
-                );
+            );
         }
 
         public static D.Cocktail ToDAL(this Cocktail cocktail)
@@ -69,6 +70,37 @@ namespace BLL.Mappers
                 CreatedBy = cocktail.CreatedBy
             };
         }
-        #endregion
-    }
+		#endregion
+
+		#region Comments
+		public static Comment ToBLL(this D.Comment comment)
+		{
+			if (comment is null) throw new ArgumentNullException(nameof(comment));
+			return new Comment(
+				comment.Comment_Id,
+				comment.Title,
+				comment.Content,
+				comment.Concern,
+				DateOnly.FromDateTime(comment.CreatedAt),
+				comment.CreatedBy,
+				comment.Note
+			);
+		}
+
+		public static D.Comment ToDAL(this Comment comment)
+		{
+			if (comment is null) throw new ArgumentNullException(nameof(comment));
+			return new D.Comment()
+			{
+				Comment_Id = comment.Comment_Id,
+				Title = comment.Title,
+				Content = comment.Content,
+				Concern = comment.Concern,
+				CreatedAt = comment.CreatedAt.ToDateTime(new TimeOnly()),
+				CreatedBy = comment.CreatedBy,
+				Note = comment.Note
+			};
+		}
+		#endregion
+	}
 }
