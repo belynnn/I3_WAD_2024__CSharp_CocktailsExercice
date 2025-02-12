@@ -15,6 +15,31 @@ namespace DAL.Services
 	{
 		private const string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=WAD24-DemoASP-DB;Integrated Security=True;";
 
+		public Comment Get(Guid comment_id)
+		{
+			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			{
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					command.CommandText = "SP_Comment_GetById";
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue(nameof(comment_id), comment_id);
+					connection.Open();
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							return reader.ToComment();
+						}
+						else
+						{
+							throw new ArgumentOutOfRangeException(nameof(comment_id));
+						}
+					}
+				}
+			}
+		}
+
 		public IEnumerable<Comment> GetFromCocktail(Guid cocktail_id)
 		{
 			using (SqlConnection connection = new SqlConnection(ConnectionString))
