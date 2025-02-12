@@ -11,19 +11,22 @@ namespace BLL.Services
 {
     public class CocktailService : ICocktailRepository<Cocktail>
     {
-        private ICocktailRepository<DAL.Entities.Cocktail> _cocktailService;
-        private IUserRepository<DAL.Entities.User> _userService;
+		private ICommentRepository<DAL.Entities.Comment> _commentService;
+		private ICocktailRepository<DAL.Entities.Cocktail> _cocktailService;
+		private IUserRepository<DAL.Entities.User> _userService;
 
-        public CocktailService(
-            ICocktailRepository<DAL.Entities.Cocktail> cocktailService,
-            IUserRepository<DAL.Entities.User> userService
-            )
-        {
-            _cocktailService = cocktailService;
-            _userService = userService;
-        }
+		public CocktailService(
+			ICommentRepository<DAL.Entities.Comment> commentService,
+			ICocktailRepository<DAL.Entities.Cocktail> cocktailService,
+			IUserRepository<DAL.Entities.User> userService
+			)
+		{
+			_commentService = commentService;
+			_cocktailService = cocktailService;
+			_userService = userService;
+		}
 
-        public void Delete(Guid cocktail_id)
+		public void Delete(Guid cocktail_id)
         {
             _cocktailService.Delete(cocktail_id);
         }

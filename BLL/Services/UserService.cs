@@ -7,24 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Repositories;
+using DAL.Services;
 
 namespace BLL.Services
 {
     public class UserService : IUserRepository<User>
     {
-        private IUserRepository<DAL.Entities.User> _userService;
-        private ICocktailRepository<DAL.Entities.Cocktail> _cocktailService;
+		private ICommentRepository<DAL.Entities.Comment> _commentService;
+		private ICocktailRepository<DAL.Entities.Cocktail> _cocktailService;
+		private IUserRepository<DAL.Entities.User> _userService;
 
-        public UserService(
-            IUserRepository<DAL.Entities.User> userService,
-            ICocktailRepository<DAL.Entities.Cocktail> cocktailService
-            )
-        {
-            _userService = userService;
-            _cocktailService = cocktailService;
-        }
+		public UserService(
+			ICommentRepository<DAL.Entities.Comment> commentService,
+			ICocktailRepository<DAL.Entities.Cocktail> cocktailService,
+			IUserRepository<DAL.Entities.User> userService
+			)
+		{
+			_commentService = commentService;
+			_cocktailService = cocktailService;
+			_userService = userService;
+		}
 
-        public IEnumerable<User> Get()
+		public IEnumerable<User> Get()
         {
             return _userService.Get().Select(dal => dal.ToBLL());
         }
