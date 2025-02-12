@@ -18,8 +18,8 @@ namespace ConsoleTest
 			Console.WriteLine("=== Test CommentService ===");
 
 			//// 1. Insérer un commentaire
-			Guid userId = new Guid("e5d87746-d701-466c-9dde-1d3f6af9ade2");
-			Guid cocktailId = new Guid("84b8d802-bab9-4c0a-8bc9-0556f8a61476");
+			Guid userId = new Guid("31d7e0f4-529c-4384-97ae-379d72a0dd8d");
+			Guid cocktailId = new Guid("21c3f40b-d45b-4823-8216-00f510ecd8db");
 
 			Comment newComment = new Comment
 			{
