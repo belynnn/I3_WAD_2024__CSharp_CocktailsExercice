@@ -1,10 +1,11 @@
 ﻿// Test DAL
-using DAL.Entities;
-using DAL.Services;
+//using DAL.Entities;
+//using DAL.Services;
 
 // Test BLL
-//using BLL.Entities;
-//using BLL.Services;
+using D = DAL.Services;
+using BLL.Entities;
+using BLL.Services;
 
 namespace ConsoleTest
 {
@@ -12,7 +13,8 @@ namespace ConsoleTest
     {
 		static void Main(string[] args)
 		{
-			// Test DAL
+			#region Test DAL
+			/*
 			CommentService commentService = new CommentService();
 
 			Console.WriteLine("=== Test CommentService ===");
@@ -62,6 +64,58 @@ namespace ConsoleTest
 			// 5. Supprimer un commentaire
 			commentService.Delete(newCommentId);
 			Console.WriteLine("\nCommentaire supprimé.");
+			*/
+			#endregion
+
+			#region Test BLL
+			// Initialisation des services DAL
+			var commentDalService = new D.CommentService();
+			var cocktailDalService = new D.CocktailService();
+			var userDalService = new D.UserService();
+
+			Console.WriteLine("\n=== Test BLL ===");
+
+			// 🔹 Injecter la DAL dans la BLL
+			var commentService = new BLL.Services.CommentService(commentDalService, cocktailDalService, userDalService);
+
+			// 🔹 Créer un nouvel utilisateur et cocktail (existant dans la BD)
+			Guid userId = new Guid("06141db4-c0c6-43be-8d25-4eb6b3cca397");
+			Guid cocktailId = new Guid("5f773e1f-b2f9-4c97-8571-03cb30131088");
+
+			// 1️ Ajouter un commentaire via la BLL
+			var newBllComment = new Comment(Guid.NewGuid(), "Super Cocktail!", "J'adore ce cocktail, très rafraîchissant!", cocktailId, DateOnly.FromDateTime(DateTime.Now), userId, 4);
+			Guid bllCommentId = commentService.Insert(newBllComment);
+			Console.WriteLine($"[BLL] Commentaire ajouté avec ID: {bllCommentId}");
+
+			// 2️ Récupérer les commentaires d’un utilisateur via la BLL
+			Console.WriteLine("\n[BLL] Commentaires de l'utilisateur:");
+			foreach (var comment in commentService.GetFromUser(userId))
+			{
+				Console.WriteLine($"- {comment.Title}: {comment.Content} (Note: {comment.Note})");
+			}
+
+			// 3️ Récupérer les commentaires d’un cocktail via la BLL
+			Console.WriteLine("\n[BLL] Commentaires du cocktail:");
+			foreach (var comment in commentService.GetFromCocktail(cocktailId))
+			{
+				Console.WriteLine($"- {comment.Title}: {comment.Content} (Note: {comment.Note})");
+			}
+
+			// 4️ Modifier un commentaire via la BLL
+			newBllComment.Title = "Cocktail encore meilleur!";
+			newBllComment.Content = "Après un second essai, je l'adore encore plus!";
+			newBllComment.Note = 5;
+			commentService.Update(bllCommentId, newBllComment);
+			Console.WriteLine("\n[BLL] Commentaire modifié.");
+
+			// Vérification après modification
+			var updatedComment = commentService.Get(bllCommentId);
+			Console.WriteLine($"[BLL] Après modification: {updatedComment.Title} - {updatedComment.Content} (Note: {updatedComment.Note})");
+
+			// 5️ Supprimer un commentaire via la BLL
+			commentService.Delete(bllCommentId);
+			Console.WriteLine("\n[BLL] Commentaire supprimé.");
+			#endregion
 		}
 	}
 }
